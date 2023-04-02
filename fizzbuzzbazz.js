@@ -1,27 +1,25 @@
 
-function mapValue() {
-  let v = 0;
-  for(const [i, a] of Object.entries(arguments)) {
-    v += a << i;
-  }
-  return v;
+function keyf() {
+  return Object.entries(arguments).reduce((r, [i, v]) => r + ((!v) << i), 0);
 }
 
 
 const texts = new Map([
-  [mapValue(false, false, false), v => v],
-  [mapValue(true, false, false), _ => 'Fizz'],
-  [mapValue(false, true, false), _ => 'Buzz'],
-  [mapValue(false, false, true), _ => 'Bazz'],
-  [mapValue(true, true, false), _ => 'FizzBuzz'],
-  [mapValue(false, true, true), _ => 'BuzzBazz'],
-  [mapValue(true, false, true), _ => 'FizzBazz'],
-  [mapValue(true, true, true), _ => 'FizzBuzzBazz'],
+  [keyf(1, 1, 1), v => v],
+  [keyf(0, 1, 1), _ => 'Fizz'],
+  [keyf(1, 0, 1), _ => 'Buzz'],
+  [keyf(1, 1, 0), _ => 'Bazz'],
+  [keyf(0, 0, 1), _ => 'FizzBuzz'],
+  [keyf(1, 0, 0), _ => 'BuzzBazz'],
+  [keyf(0, 1, 0), _ => 'FizzBazz'],
+  [keyf(0, 0, 0), _ => 'FizzBuzzBazz'],
 ]);
+
+console.log(texts);
 
 function main() {
   for(let i = 0; i < 100; i++) {
-    const k = mapValue(i % 4 === 0, i % 6 === 0, i % 7 === 0);
+    const k = keyf(i % 4, i % 6, i % 7);
     console.log(texts.get(k)(i));
   }
 }
